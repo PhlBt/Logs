@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <v-main>
+        <v-container>
+          <v-row>
+            <v-col class="mr-3" lg="3">
+              <v-card class="mb-6">
+                <v-row>
+                  <v-col class="pa-4" lg="8">
+                    <v-file-input v-model="file" id="fileUpload"></v-file-input>
+                    <v-text-field class="ml-7" v-model="fileName" label="File name"></v-text-field>
+                  </v-col>
+                  <v-col class="d-flex mt-auto mb-auto justify-center" lg="3">
+                    <v-btn icon @click="uploadFile()"><v-icon size="50px">mdi-file-upload</v-icon></v-btn>
+                  </v-col>
+                </v-row>
+              </v-card>
+              <v-data-table
+                :headers="fileHeaders"
+                :items="files"
+                :items-per-page="5"
+                class="elevation-1"
+              >
+                <template v-slot:item.action="{ item }">
+                  <v-btn icon download v-bind:href="'./csv/'+item.file+'.csv'"><v-icon>mdi-download</v-icon></v-btn>
+                  <v-btn icon @click="showFile(item.file)"><v-icon>mdi-play</v-icon></v-btn>
+                  <v-btn icon @click="deleteFile(item.file)"><v-icon>mdi-delete</v-icon></v-btn>
+                </template>
+              </v-data-table>
+            </v-col>
+            <v-col class="ml-3" lg="8">
+              <v-data-table
+                dense
+                :headers="headers"
+                :items="items"
+                class="elevation-1"
+                :search="search"
+                :items-per-page="15"
+              >
+                <template v-slot:top>
+                  <v-text-field v-model="search" label="Search" class="mx-4"></v-text-field>
+                </template>
+              </v-data-table>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-main>
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://unpkg.com/vuex"></script>
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="/script.js"></script>
+</body>
+</html>
